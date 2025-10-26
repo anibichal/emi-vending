@@ -89,7 +89,7 @@ export default function PagoScreen() {
   }
 
   // if POS init hasn't completed yet, show a small spinner (avoid blank)
-  if (!initChecked) {
+  if (initChecked) {
     return (
       <ScreenWrapper>
         <h1 className="screen-title">Inicializando terminal...</h1>
