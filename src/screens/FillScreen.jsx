@@ -1,30 +1,41 @@
-import ScreenWrapper from '../components/ScreenWrapper';
-import LoadingSpinner from '../components/LoadingSpinner';
-import Button from '../components/Button';
-import { useEffect, useState } from 'react';
+import { useParams, useNavigate } from 'react-router-dom'
+import { useEffect, useState } from 'react'
+import ScreenWrapper from '../components/ScreenWrapper.jsx'
+import LoadingSpinner from '../components/LoadingSpinner.jsx'
+import Button from '../components/Button.jsx'
+import { getBidonStatus } from '../services/mockServices.js'
+import { uiConfig } from '../config/uiConfig.js'
 
 export default function FillScreen() {
-  const [ready, setReady] = useState(false);
+  const { litros } = useParams()
+  const navigate = useNavigate()
+  const [status, setStatus] = useState('waiting')
 
   useEffect(() => {
-    const timer = setTimeout(() => setReady(true), 2000);
-    return () => clearTimeout(timer);
-  }, []);
+    let mounted = true
+    getBidonStatus()
+      .then(() => { if (mounted) setStatus('ready') })
+      .catch(() => navigate('/error'))
+    return () => { mounted = false }
+  }, [])
 
   return (
     <ScreenWrapper>
-      {ready ? (
+      {status === 'waiting' ? (
         <>
-          <h1>Listo para llenar</h1>
-          <Button text="Iniciar llenado" onClick={() => console.log('Iniciando...')} />
+          <h1 className="screen-title">{uiConfig.messages.fillInsert}</h1>
+          <LoadingSpinner />
         </>
       ) : (
         <>
-          <h1>Preparando...</h1>
-          <LoadingSpinner />
+          <h1 className="screen-title">{uiConfig.messages.fillReady}</h1>
+          <div style={{ marginTop: 12 }}>
+            <Button text={uiConfig.buttons.startFill} onClick={() => navigate(`/filling/${litros}`)} />
+          </div>
         </>
       )}
     </ScreenWrapper>
-  );
+  )
 }
+
 

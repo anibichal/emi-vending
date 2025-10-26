@@ -1,12 +1,12 @@
-import { HashRouter, Routes, Route } from 'react-router-dom';
-import StartScreen from './screens/StartScreen';
-import QtyScreen from './screens/QtyScreen';
-import PagoScreen from './screens/PagoScreen';
-import FillScreen from './screens/FillScreen';
-import FillingScreen from './screens/FillingScreen';
-import ThanksScreen from './screens/ThanksScreen';
-import ErrorScreen from './screens/ErrorScreen';
-import './index.css';
+import { HashRouter, Routes, Route } from 'react-router-dom'
+import StartScreen from './screens/StartScreen.jsx'
+import QtyScreen from './screens/QtyScreen.jsx'
+import PagoScreen from './screens/PagoScreen.jsx'
+import FillScreen from './screens/FillScreen.jsx'
+import FillingScreen from './screens/FillingScreen.jsx'
+import ThanksScreen from './screens/ThanksScreen.jsx'
+import ErrorScreen from './screens/ErrorScreen.jsx'
+import './index.css'
 
 export default function App() {
   return (
@@ -14,13 +14,14 @@ export default function App() {
       <Routes>
         <Route path="/" element={<StartScreen />} />
         <Route path="/qty" element={<QtyScreen />} />
-        <Route path="/pago" element={<PagoScreen />} />
-        <Route path="/fill" element={<FillScreen />} />
-        <Route path="/filling" element={<FillingScreen />} />
+        <Route path="/pago/:litros" element={<PagoScreen />} />
+        <Route path="/fill/:litros" element={<FillScreen />} />
+        <Route path="/filling/:litros" element={<FillingScreen />} />
         <Route path="/thanks" element={<ThanksScreen />} />
         <Route path="/error" element={<ErrorScreen />} />
       </Routes>
     </HashRouter>
-  );
+  )
 }
+
 

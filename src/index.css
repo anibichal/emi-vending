@@ -1,36 +1,61 @@
-:root {
-  --primary-color: rgb(66, 133, 244);
-  --text-color: white;
+@import url('https://fonts.googleapis.com/css2?family=Comfortaa:wght@300;400;700&display=swap');
+
+:root{
+  --main-bg: rgb(66,133,244);
+  --button-bg: rgb(42,40,41);
+  --text: #ffffff;
+}
+
+*{ box-sizing: border-box }
+html,body,#root{ height: 100%; margin: 0; }
+
+body{
+  background: var(--main-bg);
+  color: var(--text);
   font-family: 'Comfortaa', sans-serif;
 }
 
-body {
-  background-color: var(--primary-color);
-  color: var(--text-color);
-  margin: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
+.screen-wrapper {
   height: 100vh;
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  flex-direction: column;
+  text-align:center;
+  padding: 20px;
 }
 
-button {
+.screen-title {
+  font-size: 2rem;
+  margin: 0 0 12px;
+}
+
+.app-button {
+  background: var(--button-bg);
+  color: var(--text);
   border: none;
-  padding: 14px 24px;
-  border-radius: 16px;
-  font-size: 1.2rem;
-  background-color: white;
-  color: var(--primary-color);
+  border-radius: 12px;
+  padding: 14px 28px;
+  font-size: 1.1rem;
   cursor: pointer;
-  transition: 0.3s ease;
+  margin: 8px;
 }
 
-button:hover {
-  opacity: 0.8;
+.qty-row {
+  display:flex;
+  gap: 16px;
+  margin-top: 20px;
+  justify-content:center;
 }
 
-/* Spinner animation */
-@keyframes spin {
-  from { transform: rotate(0deg); }
-  to { transform: rotate(360deg); }
+.spinner {
+  width: 64px;
+  height: 64px;
+  border: 6px solid rgba(255,255,255,0.25);
+  border-top: 6px solid rgba(255,255,255,1);
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+  margin-top: 18px;
 }
+@keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+

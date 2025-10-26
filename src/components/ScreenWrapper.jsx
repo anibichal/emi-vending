@@ -1,25 +1,22 @@
-import PropTypes from 'prop-types';
+import PropTypes from 'prop-types'
+import { motion } from 'framer-motion'
 
 export default function ScreenWrapper({ children }) {
   return (
-    <div
-      style={{
-        display: 'flex',
-        flexDirection: 'column',
-        justifyContent: 'center',
-        alignItems: 'center',
-        height: '100vh',
-        textAlign: 'center',
-        padding: '20px',
-      }}
+    <motion.div
+      initial={{ opacity: 0, x: 40 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: -40 }}
+      transition={{ duration: 0.35 }}
+      className="screen-wrapper"
     >
       {children}
-    </div>
-  );
+    </motion.div>
+  )
 }
 
-ScreenWrapper.propTypes = {
-  children: PropTypes.node.isRequired,
-};
+ScreenWrapper.propTypes = { children: PropTypes.node.isRequired }
+
+
 
 
