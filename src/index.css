@@ -1,0 +1,36 @@
+:root {
+  --primary-color: rgb(66, 133, 244);
+  --text-color: white;
+  font-family: 'Comfortaa', sans-serif;
+}
+
+body {
+  background-color: var(--primary-color);
+  color: var(--text-color);
+  margin: 0;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+button {
+  border: none;
+  padding: 14px 24px;
+  border-radius: 16px;
+  font-size: 1.2rem;
+  background-color: white;
+  color: var(--primary-color);
+  cursor: pointer;
+  transition: 0.3s ease;
+}
+
+button:hover {
+  opacity: 0.8;
+}
+
+/* Spinner animation */
+@keyframes spin {
+  from { transform: rotate(0deg); }
+  to { transform: rotate(360deg); }
+}
