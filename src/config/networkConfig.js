@@ -1,3 +1,3 @@
 export const networkConfig = {
-  wsUrl: 'ws://localhost:8765', // tu servidor WebSocket local
+  wsUrl: 'ws://192.168.1.14:6789', // tu servidor WebSocket local
 }
