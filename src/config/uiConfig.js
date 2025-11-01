@@ -2,7 +2,7 @@ export const uiConfig = {
   prices: { 1: 700, 2: 1300, 3: 1900 },
 
   messages: {
-    start: 'Toque pantalla para comenzar',
+    start: 'Toque el logo para comenzar',
     checkingStock: 'Verificando nivel de stock...',
     lowStock: 'Nivel de stock bajo, no podemos proceder con la venta',
     timeoutStockService : 'Servicio de stock no disponible',

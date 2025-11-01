@@ -43,10 +43,8 @@ export default function StartScreen() {
     <ScreenWrapper>
       {status === 'ready' && (
         <>
-          <EmiLogo />
-          <div style={{ marginTop: 18 }}>
-            <Button text={uiConfig.buttons.start} onClick={handleStart} />
-          </div>
+          <h1 className="screen-title">{uiConfig.messages.start}</h1>
+          <EmiLogo onClick={handleStart} />
         </>
       )}
 
