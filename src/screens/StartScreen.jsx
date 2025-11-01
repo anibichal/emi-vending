@@ -5,6 +5,8 @@ import LoadingSpinner from '../components/LoadingSpinner.jsx'
 import Button from '../components/Button.jsx'
 import { uiConfig } from '../config/uiConfig.js'
 import { connectStockLevelSocket, disconnectStockLevelSocket } from '../services/stockLevelService.js'
+//import FillingDrop from "../components/FillingDrop.jsx";
+import EmiLogo from "../components/EmiLogoAnimation.jsx";
 
 export default function StartScreen() {
   const navigate = useNavigate()
@@ -41,7 +43,7 @@ export default function StartScreen() {
     <ScreenWrapper>
       {status === 'ready' && (
         <>
-          <h1 className="screen-title">{uiConfig.messages.start}</h1>
+          <EmiLogo />
           <div style={{ marginTop: 18 }}>
             <Button text={uiConfig.buttons.start} onClick={handleStart} />
           </div>
