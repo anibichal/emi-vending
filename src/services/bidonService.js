@@ -4,8 +4,8 @@ let ws = null
 
 export function connectBidonSocket(onStatusChange) {
   if (ws) return // evitar reconexión múltiple
-  ws = new WebSocket(networkConfig.wsUrl)
-
+  ws = new WebSocket(networkConfig.wsUrlBidonStatus)
+  
   ws.onopen = () => console.log('[WS] Conectado al servidor de bidón')
 
   ws.onmessage = (event) => {

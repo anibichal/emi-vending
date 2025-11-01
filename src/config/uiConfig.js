@@ -3,6 +3,9 @@ export const uiConfig = {
 
   messages: {
     start: 'Toque pantalla para comenzar',
+    checkingStock: 'Verificando nivel de stock...',
+    lowStock: 'Nivel de stock bajo, no podemos proceder con la venta',
+    timeoutStockService : 'Servicio de stock no disponible',
     qty: '¿Cuántos litros desea cargar?',
     paySelection: litros => `Usted ha seleccionado ${litros} litro(s)`,
     paying: 'Siga las instrucciones en el pinpad',
