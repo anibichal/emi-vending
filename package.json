@@ -7,8 +7,8 @@
     "dev:vite": "vite",
     "dev:electron": "electron .",
     "build": "vite build",
-    "electron": "cross-env VITE_DEV_SERVER_URL=http://localhost:8080 electron .",
-    "start": "concurrently \"npm run dev:vite\" \"wait-on http://localhost:8080 && npm run electron\""
+    "electron": "cross-env VITE_DEV_SERVER_URL=http://localhost:5173 electron .",
+    "start": "concurrently \"npm run dev:vite\" \"wait-on http://localhost:5173 && npm run electron\""
   },
   "keywords": [],
   "author": "",
