@@ -1,22 +1,23 @@
-import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
-import ScreenWrapper from '../components/ScreenWrapper.jsx'
-import LoadingSpinner from '../components/LoadingSpinner.jsx'
-import Button from '../components/Button.jsx'
-import { getBidonStatus } from '../services/mockServices.js'
-import { uiConfig } from '../config/uiConfig.js'
+import { useNavigate, useParams } from 'react-router-dom'
+import ScreenWrapper from '../components/ScreenWrapper'
+import Button from '../components/Button'
+import LoadingSpinner from '../components/LoadingSpinner'
+import { uiConfig } from '../config/uiConfig'
+import { connectBidonSocket, disconnectBidonSocket } from '../services/bidonService'
 
 export default function FillScreen() {
   const { litros } = useParams()
   const navigate = useNavigate()
-  const [status, setStatus] = useState('waiting')
+  const [status, setStatus] = useState('waiting') // waiting | ready
 
   useEffect(() => {
-    let mounted = true
-    getBidonStatus()
-      .then(() => { if (mounted) setStatus('ready') })
-      .catch(() => navigate('/error'))
-    return () => { mounted = false }
+    connectBidonSocket((statusBidon) => {
+      if (statusBidon) setStatus('ready')
+      else setStatus('waiting')
+    })
+
+    return () => disconnectBidonSocket()
   }, [])
 
   return (
@@ -30,12 +31,16 @@ export default function FillScreen() {
         <>
           <h1 className="screen-title">{uiConfig.messages.fillReady}</h1>
           <div style={{ marginTop: 12 }}>
-            <Button text={uiConfig.buttons.startFill} onClick={() => navigate(`/filling/${litros}`)} />
+            <Button
+              text={uiConfig.buttons.startFill}
+              onClick={() => navigate(`/filling/${litros}`)}
+            />
           </div>
         </>
       )}
     </ScreenWrapper>
   )
 }
+
 
 

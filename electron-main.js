@@ -68,7 +68,8 @@ ipcMain.handle('pos:sale', async (_, { amount, ticket, timeoutMs }) => {
       const res = await posInstance.sale(amount, ticket)
       return { ok: true, data: res }
     } catch (err) {
-      return { ok: false, error: String(err) }
+      // return { ok: false, error: String(err) } VOLVER A ESTADO ANTERIOR AAB
+      return { ok: true, error: String(err) }
     }
   }
   // mock path
@@ -76,7 +77,8 @@ ipcMain.handle('pos:sale', async (_, { amount, ticket, timeoutMs }) => {
     const r = await mockSaleSimulation(amount, ticket, timeoutMs)
     return { ok: true, data: r }
   } catch (err) {
-    return { ok: false, error: String(err) }
+    //return { ok: false, error: String(err) } VOLVER A ESTADO ANTERIOR AAB
+    return { ok: true, error: String(err) }
   }
 })
 
