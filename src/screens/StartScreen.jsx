@@ -2,19 +2,23 @@ import { useState } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ScreenWrapper from '../components/ScreenWrapper.jsx'
 import LoadingSpinner from '../components/LoadingSpinner.jsx'
-import Button from '../components/Button.jsx'
 import { uiConfig } from '../config/uiConfig.js'
 import { connectStockLevelSocket, disconnectStockLevelSocket } from '../services/stockLevelService.js'
-//import FillingDrop from "../components/FillingDrop.jsx";
 import EmiLogo from "../components/EmiLogoAnimation.jsx";
+import TapSound from "../assets/sounds/TapSound.wav";
 
 export default function StartScreen() {
   const navigate = useNavigate()
   const [status, setStatus] = useState('ready') // 'ready' | 'checking' | 'lowStock' | 'timeout'
 
+  const playSound = () => {
+    const audio = new Audio(TapSound);
+    audio.play();
+  };
+
   const handleStart = () => {
     setStatus('checking')
-
+    playSound()
     // Timeout de 10 segundos (10000 ms)
     const timeout = setTimeout(() => {
       console.warn('[WS] Timeout sin respuesta del servidor')
