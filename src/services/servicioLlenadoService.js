@@ -45,6 +45,7 @@ export function connectServicioLlenado({ litros, densidad, onPesoUpdate, onFinis
 
         if ('peso' in msg && typeof msg.peso === 'number') {
           onPesoUpdate?.(msg.peso)
+          console.log(msg.peso)
         }
       } catch (err) {
         console.error('[WS] Error procesando mensaje:', err)
