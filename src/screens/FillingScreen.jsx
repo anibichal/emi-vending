@@ -1,27 +1,77 @@
 import { useParams, useNavigate } from 'react-router-dom'
-import { useEffect } from 'react'
+import { useEffect, useState } from 'react'
 import ScreenWrapper from '../components/ScreenWrapper.jsx'
 import LoadingSpinner from '../components/LoadingSpinner.jsx'
-import { LlenarLiquido } from '../services/mockServices.js'
 import { uiConfig } from '../config/uiConfig.js'
+import {
+  connectServicioLlenado,
+  disconnectServicioLlenado,
+} from '../services/servicioLlenadoService.js'
 
 export default function FillingScreen() {
   const { litros } = useParams()
   const navigate = useNavigate()
+  const [status, setStatus] = useState('preparing') // preparing | filling | finished
+  const [peso, setPeso] = useState(null)
 
   useEffect(() => {
     let mounted = true
-    LlenarLiquido(Number(litros))
-      .then(() => { if (mounted) navigate('/thanks') })
-      .catch(() => navigate('/error'))
-    return () => { mounted = false }
+
+    // Paso 1: pantalla "Preparando llenado"
+    setStatus('preparing')
+
+    // Paso 2: conectar al websocket
+    connectServicioLlenado({
+      litros: Number(litros),
+      densidad: uiConfig.messages.densidadLiquido,
+
+      // Actualización del peso
+      onPesoUpdate: (nuevoPeso) => {
+        if (!mounted) return
+        if (status !== 'filling') setStatus('filling')
+        setPeso(nuevoPeso)
+      },
+
+      // Fin del proceso
+      onFinish: () => {
+        if (!mounted) return
+        setStatus('finished')
+        setTimeout(() => navigate('/thanks'), 5000)
+      },
+
+      // Errores
+      onError: () => {
+        if (!mounted) return
+        navigate('/error')
+      },
+    })
+
+    // Cleanup
+    return () => {
+      mounted = false
+      disconnectServicioLlenado()
+    }
   }, [])
 
   return (
     <ScreenWrapper>
-      <h1 className="screen-title">{uiConfig.messages.filling}</h1>
-      <LoadingSpinner />
+      {status === 'preparing' && (
+        <h1 className="screen-title">{uiConfig.messages.preparingFilling}</h1>
+      )}
+
+      {status === 'filling' && (
+        <>
+          <h1 className="screen-title">{uiConfig.messages.filling}</h1>
+          <LoadingSpinner />
+          <h2 style={{ marginTop: 20 }}>Peso actual: {peso?.toFixed(2) ?? '---'} kg</h2>
+        </>
+      )}
+
+      {status === 'finished' && (
+        <h1 className="screen-title">{uiConfig.messages.endFilling}</h1>
+      )}
     </ScreenWrapper>
   )
 }
+
 

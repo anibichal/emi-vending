@@ -12,8 +12,11 @@ export const uiConfig = {
     printing: 'Pago procesado, imprimiendo boleta...',
     fillInsert: 'Introduzca el bidón en la ranura',
     fillReady: 'Presione botón iniciar para comenzar el llenado',
-    filling: 'Llenando...',
+    filling: 'Comenzando Llenado',
+    preparingFilling: 'Llenando...',
+    endFilling: 'Proceso terminado',
     thanks: 'Muchas gracias por utilizar EMI, vuelva pronto ;)',
+    densidadLiquido: 0.985,
     error: 'Ups!, algo ha salido mal. Favor vuelva a intentarlo.'
   },
 
