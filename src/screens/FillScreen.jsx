@@ -5,6 +5,7 @@ import Button from '../components/Button'
 import LoadingSpinner from '../components/LoadingSpinner'
 import { uiConfig } from '../config/uiConfig'
 import { connectBidonSocket, disconnectBidonSocket } from '../services/bidonService'
+import ButtonStart from '../components/ButtonStart'
 
 export default function FillScreen() {
   const { litros } = useParams()
@@ -31,8 +32,7 @@ export default function FillScreen() {
         <>
           <h1 className="screen-title">{uiConfig.messages.fillReady}</h1>
           <div style={{ marginTop: 12 }}>
-            <Button
-              text={uiConfig.buttons.startFill}
+            <ButtonStart
               onClick={() => navigate(`/filling/${litros}`)}
             />
           </div>
