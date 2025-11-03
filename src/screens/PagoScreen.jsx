@@ -6,6 +6,7 @@ import LoadingSpinner from '../components/LoadingSpinner.jsx'
 import { uiConfig } from '../config/uiConfig.js'
 import { initPOS, doSale } from '../services/posService.js'
 import { ImprimirBoleta } from '../services/mockServices.js'
+import ButtonPay from '../components/ButtonPay.jsx'
 
 function getTicketCountForToday() {
   try {
@@ -106,7 +107,7 @@ export default function PagoScreen() {
         <>
           <h1 className="screen-title">{uiConfig.messages.paySelection(litros)}</h1>
           <div style={{ marginTop: 12 }}>
-            <Button text={uiConfig.buttons.pay} onClick={handlePay} />
+            <ButtonPay onClick={handlePay} />
           </div>
         </>
       )}
