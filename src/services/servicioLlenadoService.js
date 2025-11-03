@@ -43,7 +43,8 @@ export function connectServicioLlenado({ litros, densidad, onPesoUpdate, onFinis
           return
         }
 
-        if ('peso' in msg && typeof msg.peso === 'number') {
+        //if ('peso' in msg && typeof msg.peso === 'number') {
+        if ('peso' in msg) {
           onPesoUpdate?.(msg.peso)
           console.log(msg.peso)
         }
