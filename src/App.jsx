@@ -1,4 +1,5 @@
 import { HashRouter, Routes, Route } from 'react-router-dom'
+import { useEffect } from "react";
 import StartScreen from './screens/StartScreen.jsx'
 import QtyScreen from './screens/QtyScreen.jsx'
 import PagoScreen from './screens/PagoScreen.jsx'
