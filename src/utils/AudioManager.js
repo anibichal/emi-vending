@@ -4,7 +4,9 @@ import SeleccioneCantidad from "../assets/sounds/SeleccioneCantidad.wav";
 import ColoqueEnvase from "../assets/sounds/Coloca.wav";
 import Gracias from "../assets/sounds/Gracias.wav";
 import TapSound from "../assets/sounds/tapSound.wav";
-import VerificandoStock from "../assets/sounds/VerificandoStock.wav";
+import SinStock from "../assets/sounds/SinStock.wav";
+import Llenando from "../assets/sounds/Llenando.wav";
+import LlenadoCompleto from "../assets/sounds/LlenadoCompleto.wav";
 
 // Creamos una lista de sonidos que queremos precargar
 const sounds = {
@@ -12,7 +14,9 @@ const sounds = {
   coloqueEnvase: new Audio(ColoqueEnvase),
   gracias: new Audio(Gracias),
   tapSound: new Audio(TapSound),
-  verificandoStock: new Audio(VerificandoStock),
+  sinStock: new Audio(SinStock),
+  llenando: new Audio(Llenando),
+  llenadoCompleto: new Audio(LlenadoCompleto),
 };
 
 // Precargar todos los sonidos (para que estén listos)

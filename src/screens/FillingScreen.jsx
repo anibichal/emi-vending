@@ -7,6 +7,7 @@ import {
   connectServicioLlenado,
   disconnectServicioLlenado,
 } from '../services/servicioLlenadoService.js'
+import { playSound } from "../utils/AudioManager.js"; //
 
 export default function FillingScreen() {
   const { litros } = useParams()
@@ -19,12 +20,13 @@ export default function FillingScreen() {
 
     // Paso 1: pantalla "Preparando llenado"
     setStatus('preparing')
+    playSound("llenando");
 
     // Paso 2: conectar al websocket
     connectServicioLlenado({
       litros: Number(litros),
       densidad: uiConfig.messages.densidadLiquido,
-
+      
       // Actualización del peso
       onPesoUpdate: (nuevoPeso) => {
         if (!mounted) return
@@ -36,6 +38,7 @@ export default function FillingScreen() {
       onFinish: () => {
         if (!mounted) return
         setStatus('finished')
+        playSound("llenadoCompleto");
         setTimeout(() => navigate('/thanks'), 5000)
       },
 

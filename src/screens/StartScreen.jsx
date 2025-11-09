@@ -34,7 +34,7 @@ export default function StartScreen() {
         disconnectStockLevelSocket()
         navigate('/qty')
       } else {
-        playSound("verificandoStock");
+        playSound("sinStock");
         setStatus('lowStock')
         disconnectStockLevelSocket()
         setTimeout(() => setStatus('ready'), 5000)
