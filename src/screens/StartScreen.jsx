@@ -14,8 +14,8 @@ export default function StartScreen() {
 
 
   const handleStart = () => {
-    navigate('/qty')
-    /*
+    //navigate('/qty')
+    
     setStatus('checking')
     playSound("tapSound");
     // Timeout de 10 segundos (10000 ms)
@@ -40,7 +40,7 @@ export default function StartScreen() {
         disconnectStockLevelSocket()
         setTimeout(() => setStatus('ready'), 5000)
       }
-    })*/
+    })
   }
 
   return (
