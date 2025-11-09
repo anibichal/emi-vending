@@ -13,17 +13,21 @@ export default function StartScreen() {
   const navigate = useNavigate()
   const [status, setStatus] = useState('ready') // 'ready' | 'checking' | 'lowStock' | 'timeout'
 
-  const playSound = () => {
+  const playSoundTap = () => {
     const tapAudio = new Audio(TapSound);
-    const verificandoAudio = new Audio(VerificandoStock);
     tapAudio.play();
+    
+  };
+
+  const playSoundVoice = () => {
+    const verificandoAudio = new Audio(VerificandoStock);
     verificandoAudio.play();
   };
 
   const handleStart = () => {
     
     setStatus('checking')
-    playSound()
+    playSoundTap()
     // Timeout de 10 segundos (10000 ms)
     const timeout = setTimeout(() => {
       console.warn('[WS] Timeout sin respuesta del servidor')
@@ -41,6 +45,7 @@ export default function StartScreen() {
         disconnectStockLevelSocket()
         navigate('/qty')
       } else {
+        playSoundVoice()
         setStatus('lowStock')
         disconnectStockLevelSocket()
         setTimeout(() => setStatus('ready'), 5000)
