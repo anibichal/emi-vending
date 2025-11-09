@@ -5,14 +5,14 @@ import LoadingSpinner from '../components/LoadingSpinner'
 import { uiConfig } from '../config/uiConfig'
 import { connectBidonSocket, disconnectBidonSocket } from '../services/bidonService'
 import ButtonStart from '../components/ButtonStart'
-import { playSound } from "../utils/AudioManager.js"; //
+import { playSound } from "../utils/AudioManager.js";
+
 
 export default function FillScreen() {
   const { litros } = useParams()
   const navigate = useNavigate()
-  const [status, setStatus] = useState('waiting') // waiting | ready
+  const [status, setStatus] = useState('waiting')
 
-  // ✅ Reproducir el sonido al renderizar la pantalla
   useEffect(() => {
     playSound("coloqueEnvase");
   }, []);
@@ -37,15 +37,16 @@ export default function FillScreen() {
         <>
           <h1 className="screen-title">{uiConfig.messages.fillReady}</h1>
           <div style={{ marginTop: 12 }}>
-            <ButtonStart
-              onClick={() => navigate(`/filling/${litros}`)}
-            />
+            <ButtonStart onClick={() => navigate(`/filling/${litros}`)} />
           </div>
         </>
       )}
+
+
     </ScreenWrapper>
   )
 }
+
 
 
 

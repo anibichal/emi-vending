@@ -7,6 +7,7 @@ import { uiConfig } from '../config/uiConfig.js'
 import { initPOS, doSale } from '../services/posService.js'
 import { ImprimirBoleta } from '../services/mockServices.js'
 import ButtonPay from '../components/ButtonPay.jsx'
+import { Home } from 'lucide-react'  // 👈 icono
 
 function getTicketCountForToday() {
   try {
@@ -125,6 +126,14 @@ export default function PagoScreen() {
           <LoadingSpinner />
         </>
       )}
+            {/* 👇 Botón flotante de Home */}
+      <button
+        className="home-button"
+        onClick={() => navigate('/')}
+        aria-label="Ir a inicio"
+      >
+        <Home size={40} />
+      </button>
     </ScreenWrapper>
   )
 }

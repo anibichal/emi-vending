@@ -58,5 +58,31 @@ body{
   margin-top: 18px;
 }
 
+/* Botón flotante de Home */
+.home-button {
+  position: fixed;
+  bottom: 20px;
+  left: 20px;
+  width: 81px;
+  height: 81px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.25);
+  backdrop-filter: blur(6px);
+  border: 1px solid rgba(255, 255, 255, 0.35);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: white;
+  cursor: pointer;
+  z-index: 999;
+  transition: all 0.25s ease;
+}
+
+.home-button:hover {
+  background: rgba(255, 255, 255, 0.4);
+  transform: scale(1.05);
+}
+
+
 @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
