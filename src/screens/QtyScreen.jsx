@@ -5,21 +5,14 @@ import ButtonOne from "../components/ButtonOne.jsx";
 import ButtonTwo from "../components/ButtonTwo.jsx";
 import ButtonThree from "../components/ButtonThree.jsx";
 import { uiConfig } from "../config/uiConfig.js";
-import SeleccioneCantidad from "../assets/sounds/SeleccioneCantidad.wav";
+import { playSound } from "../utils/AudioManager.js"; //
 
 export default function QtyScreen() {
   const navigate = useNavigate();
 
-  const playSound = () => {
-    const audio = new Audio(SeleccioneCantidad);
-    audio.play().catch((err) => {
-      console.warn("No se pudo reproducir el audio automáticamente:", err);
-    });
-  };
-
   // ✅ Reproducir el sonido al renderizar la pantalla
   useEffect(() => {
-    playSound();
+    playSound("seleccionarCantidad");
   }, []);
 
   return (

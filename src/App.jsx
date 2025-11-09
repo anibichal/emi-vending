@@ -6,9 +6,15 @@ import FillScreen from './screens/FillScreen.jsx'
 import FillingScreen from './screens/FillingScreen.jsx'
 import ThanksScreen from './screens/ThanksScreen.jsx'
 import ErrorScreen from './screens/ErrorScreen.jsx'
+import { preloadSounds } from "./utils/AudioManager.js";
 import './index.css'
 
 export default function App() {
+
+  useEffect(() => {
+    preloadSounds(); // precarga todos los audios una sola vez
+  }, []);
+
   return (
     <HashRouter>
       <Routes>

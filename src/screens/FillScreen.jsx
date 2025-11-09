@@ -5,23 +5,16 @@ import LoadingSpinner from '../components/LoadingSpinner'
 import { uiConfig } from '../config/uiConfig'
 import { connectBidonSocket, disconnectBidonSocket } from '../services/bidonService'
 import ButtonStart from '../components/ButtonStart'
-import Coloca from "../assets/sounds/Coloca.wav";
+import { playSound } from "../utils/AudioManager.js"; //
 
 export default function FillScreen() {
   const { litros } = useParams()
   const navigate = useNavigate()
   const [status, setStatus] = useState('waiting') // waiting | ready
 
-  const playSound = () => {
-    const audio = new Audio(Coloca);
-    audio.play().catch((err) => {
-      console.warn("No se pudo reproducir el audio automáticamente:", err);
-    });
-  };
-
   // ✅ Reproducir el sonido al renderizar la pantalla
   useEffect(() => {
-    playSound();
+    playSound("coloqueEnvase");
   }, []);
 
   useEffect(() => {

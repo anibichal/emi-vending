@@ -5,29 +5,18 @@ import LoadingSpinner from '../components/LoadingSpinner.jsx'
 import { uiConfig } from '../config/uiConfig.js'
 import { connectStockLevelSocket, disconnectStockLevelSocket } from '../services/stockLevelService.js'
 import EmiLogo from "../components/EmiLogoAnimation.jsx";
-import TapSound from "../assets/sounds/tapSound.wav";
-import VerificandoStock from "../assets/sounds/VerificandoStock.wav";
-
+import { playSound } from "../utils/AudioManager.js"; //
 
 export default function StartScreen() {
   const navigate = useNavigate()
   const [status, setStatus] = useState('ready') // 'ready' | 'checking' | 'lowStock' | 'timeout'
 
-  const playSoundTap = () => {
-    const tapAudio = new Audio(TapSound);
-    tapAudio.play();
-    
-  };
 
-  const playSoundVoice = () => {
-    const verificandoAudio = new Audio(VerificandoStock);
-    verificandoAudio.play();
-  };
 
   const handleStart = () => {
     
     setStatus('checking')
-    playSoundTap()
+    playSound("tapSound");
     // Timeout de 10 segundos (10000 ms)
     const timeout = setTimeout(() => {
       console.warn('[WS] Timeout sin respuesta del servidor')
@@ -45,7 +34,7 @@ export default function StartScreen() {
         disconnectStockLevelSocket()
         navigate('/qty')
       } else {
-        playSoundVoice()
+        playSound("verificandoStock");
         setStatus('lowStock')
         disconnectStockLevelSocket()
         setTimeout(() => setStatus('ready'), 5000)
