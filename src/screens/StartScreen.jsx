@@ -12,10 +12,9 @@ export default function StartScreen() {
   const [status, setStatus] = useState('ready') // 'ready' | 'checking' | 'lowStock' | 'timeout'
 
 
-
   const handleStart = () => {
     //navigate('/qty')
-    
+   
     setStatus('checking')
     playSound("tapSound");
     // Timeout de 10 segundos (10000 ms)
@@ -54,17 +53,17 @@ export default function StartScreen() {
 
       {status === 'checking' && (
         <>
-          <h1 className="screen-title">{uiConfig.messages.checkingStock}</h1>
+          <h2 className="screen-title">{uiConfig.messages.checkingStock}</h2>
           <LoadingSpinner />
         </>
       )}
 
       {status === 'lowStock' && (
-          <h1 className="screen-title">{uiConfig.messages.lowStock}</h1>
+          <h2 className="screen-title">{uiConfig.messages.lowStock}</h2>
       )}
 
       {status === 'timeout' && (
-          <h1 className="screen-title">{uiConfig.messages.timeoutStockService}</h1>
+          <h2 className="screen-title">{uiConfig.messages.timeoutStockService}</h2>
       )}
     </ScreenWrapper>
   )
