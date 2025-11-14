@@ -9,6 +9,7 @@ import { ImprimirBoleta } from '../services/mockServices.js'
 import ButtonPay from '../components/ButtonPay.jsx'
 import { Home } from 'lucide-react'  // 👈 icono
 
+
 function getTicketCountForToday() {
   try {
     const raw = localStorage.getItem('ticketCounter')
@@ -53,6 +54,7 @@ export default function PagoScreen() {
   const navigate = useNavigate()
   const [state, setState] = useState('ready') // ready | waiting | printing
   const [initChecked, setInitChecked] = useState(false)
+
 
   useEffect(() => {
     let mounted = true
@@ -110,6 +112,7 @@ export default function PagoScreen() {
           <div style={{ marginTop: 12 }}>
             <ButtonPay onClick={handlePay} />
           </div>
+          <h1 className="screen-title">Total: ${uiConfig.prices[Number(litros)]}</h1>
         </>
       )}
 

@@ -83,6 +83,18 @@ body{
   transform: scale(1.05);
 }
 
+.qty-item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.qty-price {
+  font-size: 3rem;
+  margin-top: 12px;
+}
+
+
 
 @keyframes spin { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
 
