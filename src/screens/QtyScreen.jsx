@@ -22,19 +22,19 @@ export default function QtyScreen() {
         {/* ITEM 1 */}
         <div className="qty-item">
           <ButtonOne onClick={() => navigate(`/pago/1`, { state: { price: uiConfig.prices[0] } })} />
-          <h1 className="qty-price">{uiConfig.prices[0]}</h1>
+          <h1 className="qty-price">${uiConfig.prices[1]}</h1>
         </div>
 
         {/* ITEM 2 */}
         <div className="qty-item">
           <ButtonTwo onClick={() => navigate(`/pago/2`, { state: { price: uiConfig.prices[1] } })} />
-          <h1 className="qty-price">{uiConfig.prices[1]}</h1>
+          <h1 className="qty-price">${uiConfig.prices[2]}</h1>
         </div>
 
         {/* ITEM 3 */}
         <div className="qty-item">
           <ButtonThree onClick={() => navigate(`/pago/3`, { state: { price: uiConfig.prices[2] } })} />
-          <h1 className="qty-price">{uiConfig.prices[2]}</h1>
+          <h1 className="qty-price">${uiConfig.prices[3]}</h1>
         </div>
       </div>
     </ScreenWrapper>
