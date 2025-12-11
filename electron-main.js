@@ -142,7 +142,8 @@ async function createWindow() {
       // fallback to dist (likely missing) but continue
     }
   }
-  await win.loadFile(path.join(__dirname, 'dist', 'index.html'))
+  await win.loadFile(path.join(__dirname, 'index.html'))
+  //, 'dist'
 }
 
 app.whenReady().then(createWindow)

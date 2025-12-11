@@ -71,13 +71,13 @@ export default function PagoScreen() {
   }, [])
 
   const handlePay = async () => {
-    //setState('waiting')
+    setState('waiting')
     const price = uiConfig.prices[Number(litros)]
     const count = getTicketCountForToday()
     const ticket = `${formatDateForTicket()}${formatTimeForTicket()}${String(count).padStart(4,'0')}`
 
-    //const saleResult = await doSale(price, ticket, uiConfig.saleTimeoutMs) // VOLVER A ESTADO ANTERIOR AAB
-    /*const saleResult = await doSale(price, ticket, 3000) // volver a la normalidad este codigo
+    const saleResult = await doSale(price, ticket, uiConfig.saleTimeoutMs) // VOLVER A ESTADO ANTERIOR AAB
+    //const saleResult = await doSale(price, ticket, 3000) // volver a la normalidad este codigo
     if (!saleResult.ok) {
       console.error('Sale failed:', saleResult)
       navigate('/error')
@@ -90,12 +90,12 @@ export default function PagoScreen() {
       navigate(`/fill/${litros}`)
     } else {
       navigate('/error')
-    }*/ 
+    }
    navigate(`/fill/${litros}`)
   }
 
   // if POS init hasn't completed yet, show a small spinner (avoid blank) ESTO LO CAMBIE ERA ASI if (!initChecked) AAB
-  if (initChecked) {
+  if ((!initChecked)) {
     return (
       <ScreenWrapper>
         <h1 className="screen-title">Inicializando terminal...</h1>
