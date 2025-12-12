@@ -47,7 +47,7 @@ async function initRealPOS() {
 
     posInstance = new POSAutoservicio()
     posInstance.setDebug(true)
-
+    /*
     // 1️⃣ Intento normal
     const port = await posInstance.autoconnect();
     win.webContents.send("log", {
@@ -66,7 +66,13 @@ async function initRealPOS() {
         tag: "[MAIN] ACM0 result:",
         value: port
       });
-    }
+    }*/
+    const port = await posInstance.connect('/dev/ttyACM0');
+    
+    win.webContents.send("log", {
+      tag: "[MAIN] ACM0 result:",
+      value: port
+    });
 
     if (port === false) return { ok: false, error: 'No POS found' }
 
