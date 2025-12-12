@@ -103,10 +103,10 @@ async function initRealPOS() {
       value: port
     });
 
-    isConnected = await posInstance.isConnected();
+    const isConnectedByDefultPort = await posInstance.isConnected();
     win.webContents.send("log", {
       tag: "[MAIN] isConnected():",
-      value: isConnected
+      value: isConnectedByDefultPort
     });
 
     if (port === false) return { ok: false, error: 'No POS found' }
