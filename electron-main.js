@@ -111,11 +111,11 @@ async function initRealPOS() {
 
     if (port === false) return { ok: false, error: 'No POS found' }
 
-    await posInstance.loadKeys()
+    /*await posInstance.loadKeys();
     win.webContents.send("log", {
       tag: "[MAIN] keys loaded"
       
-    });
+    });*/
 
     return { ok: true, msg: `Connected ${port.path}` }
 
