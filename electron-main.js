@@ -97,17 +97,24 @@ async function initRealPOS() {
     // 🟡 2) Ahora que estamos seguros de estar “limpios” → conectar
     // ---------------------------------------------------------------
     const port = await posInstance.connect("/dev/ttyACM0");
-
+    
     win.webContents.send("log", {
       tag: "[MAIN] trying to connect('/dev/ttyACM0') result:",
       value: port
     });
 
+    isConnected = await posInstance.isConnected();
+    win.webContents.send("log", {
+      tag: "[MAIN] isConnected():",
+      value: isConnected
+    });
+
     if (port === false) return { ok: false, error: 'No POS found' }
 
-    await posInstance.loadKeys()
+    const keysLoader = await posInstance.loadKeys()
     win.webContents.send("log", {
       tag: "[MAIN] keys loaded",
+      value: keysLoader
     });
 
     return { ok: true, msg: `Connected ${port.path}` }
