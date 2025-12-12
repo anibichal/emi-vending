@@ -22,16 +22,26 @@ try {
 }
 
 async function initRealPOS() {
-  console.log("[MAIN] initRealPOS started")
+  win.webContents.send("log", {
+  tag: "[MAIN] initRealPOS started",
+  });
+  
   try {
     const sdk = await import('transbank-pos-sdk')
-    console.log("[MAIN] SDK loaded:", sdk)
+    console.log("[MAIN] SDK loaded:",sdk);
+    win.webContents.send("log", {
+      tag: "[MAIN] SDK loaded:",
+      value: Object.keys(sdk)
+    });
 
     // 👈 importante: acceder al default primero
     const POSAutoservicio = sdk.default.POSAutoservicio
 
     if (!POSAutoservicio) {
-      console.error("[MAIN] POSAutoservicio no encontrado en SDK")
+      
+      win.webContents.send("log", {
+        tag: "[MAIN] POSAutoservicio no encontrado en SDK",
+      });
       return { ok: false, error: "POSAutoservicio missing" }
     }
 
@@ -39,17 +49,26 @@ async function initRealPOS() {
     posInstance.setDebug(true)
 
     const port = await posInstance.autoconnect()
-    console.log("[MAIN] autoconnect result:", port)
+    console.log("[MAIN] autoconnect result:",port);
+    win.webContents.send("log", {
+      tag: "[MAIN] autoconnect result:",
+      value: port
+    });
 
     if (port === false) return { ok: false, error: 'No POS found' }
 
     await posInstance.loadKeys()
-    console.log("[MAIN] keys loaded")
+    win.webContents.send("log", {
+      tag: "[MAIN] keys loaded",
+    });
 
     return { ok: true, msg: `Connected ${port.path}` }
 
   } catch (err) {
-    console.error("[MAIN] initRealPOS ERROR:", err)
+    win.webContents.send("log", {
+      tag: "[PRELOAD] initRealPOS ERROR:",
+      value: err
+    });
     return { ok: false, error: String(err) }
   }
 }
@@ -87,8 +106,8 @@ ipcMain.handle('pos:sale', async (_, { amount, ticket, timeoutMs }) => {
       const res = await posInstance.sale(amount, ticket)
       return { ok: true, data: res }
     } catch (err) {
-      // return { ok: false, error: String(err) } VOLVER A ESTADO ANTERIOR AAB
-      return { ok: true, error: String(err) }
+      return { ok: false, error: String(err) } 
+      
     }
   }
   // mock path
