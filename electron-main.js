@@ -94,7 +94,7 @@ async function initRealPOS() {
     }
 
     await sleep(150);
-
+    /*
     try {
       const ok = await posInstance.isConnected();
       win.webContents.send("log", {
@@ -107,6 +107,7 @@ async function initRealPOS() {
         value: err
       });
     }
+    */  
 
     if (port === false) return { ok: false, error: 'No POS found' }
 
@@ -116,7 +117,7 @@ async function initRealPOS() {
       
     });*/
 
-    return { ok: true, msg: `Connected ${port.path}` }
+    return { ok: true, msg: `Connected ${port}` }
 
   } catch (err) {
     win.webContents.send("log", {
