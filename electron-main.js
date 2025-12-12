@@ -48,12 +48,21 @@ async function initRealPOS() {
     posInstance = new POSAutoservicio()
     posInstance.setDebug(true)
 
-    const port = await posInstance.autoconnect()
-    console.log("[MAIN] autoconnect result:",port);
+    // 1️⃣ Intento normal
+    let port = await posInstance.autoconnect();
     win.webContents.send("log", {
       tag: "[MAIN] autoconnect result:",
       value: port
     });
+
+    // 2️⃣ Si falla → buscar puertos manualmente
+    if (!port) {
+      win.webContents.send("log", {
+        tag: "[MAIN] autoconnect failed → trying manual scan"
+      });
+
+      port = await scanManualPorts(POSAutoservicio);
+    }
 
     if (port === false) return { ok: false, error: 'No POS found' }
 
@@ -73,6 +82,61 @@ async function initRealPOS() {
   }
 }
 
+async function scanManualPorts(POSAutoservicio) {
+  win.webContents.send("log", {
+    tag: "[MAIN] starting manual port scan",
+  });
+
+  const inst = new POSAutoservicio();
+  inst.setDebug(true);
+
+  let ports;
+  try {
+    ports = await inst.listPorts();
+    win.webContents.send("log", {
+      tag: "[MAIN] ports detected:",
+      value: ports
+    });
+  } catch (err) {
+    win.webContents.send("log", {
+      tag: "[MAIN] ERROR listing ports:",
+      value: err
+    });
+    return false;
+  }
+
+  if (!ports || ports.length === 0) {
+    win.webContents.send("log", {
+      tag: "[MAIN] no ports found",
+    });
+    return false;
+  }
+
+  for (const port of ports) {
+    try {
+      win.webContents.send("log", {
+        tag: "[MAIN] trying port:",
+        value: port
+      });
+
+      const result = await inst.connect(port);
+      win.webContents.send("log", {
+        tag: "[MAIN] CONNECT result:",
+        value: result
+      });
+
+      posInstance = inst;      // 👈 importante: dejar almacenado
+      return port;             // éxito → devolvemos puerto
+    } catch (err) {
+      win.webContents.send("log", {
+        tag: "[MAIN] failed port:",
+        value: { port, err }
+      });
+    }
+  }
+
+  return false;
+}
 
 // Mock sale simulation used if SDK not available
 function mockSaleSimulation(amount, ticket, timeoutMs) {
