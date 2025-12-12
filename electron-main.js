@@ -49,19 +49,23 @@ async function initRealPOS() {
     posInstance.setDebug(true)
 
     // 1️⃣ Intento normal
-    let port = await posInstance.autoconnect();
+    const port = await posInstance.autoconnect();
     win.webContents.send("log", {
       tag: "[MAIN] autoconnect result:",
       value: port
     });
-
-    // 2️⃣ Si falla → buscar puertos manualmente
+    
+    // 2️⃣ Si falla → intenta listando puertos o por puerto 0
     if (!port) {
       win.webContents.send("log", {
         tag: "[MAIN] autoconnect failed → trying manual scan"
       });
-
-      port = await scanManualPorts(POSAutoservicio);
+      port = await posInstance.connect('/dev/ttyACM0');
+      //port = await scanManualPorts(POSAutoservicio);
+      win.webContents.send("log", {
+        tag: "[MAIN] ACM0 result:",
+        value: port
+      });
     }
 
     if (port === false) return { ok: false, error: 'No POS found' }
