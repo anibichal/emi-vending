@@ -76,24 +76,17 @@ async function initRealPOS() {
       win.webContents.send("log", { tag: "[MAIN] disconnect error:", value: err });
     }
 
-    await sleep(250);
+    await sleep(1500);
 
     let port;
-    try {
-      port = await posInstance.connect("/dev/ttyACM0");
-      win.webContents.send("log", {
-        tag: "[MAIN] connected to /dev/ttyACM0",
-        value: port
-      });
-    } catch (err) {
-      win.webContents.send("log", {
-        tag: "[MAIN] connect error:",
-        value: err
-      });
-      return; // No sigas si no conecta
-    }
+    
+    port = await posInstance.connect("/dev/ttyACM0");
+    win.webContents.send("log", {
+      tag: "[MAIN] connected to /dev/ttyACM0",
+      value: port
+    });
 
-    await sleep(150);
+    await sleep(1000);
     /*
     try {
       const ok = await posInstance.isConnected();
