@@ -22,22 +22,38 @@ try {
 }
 
 async function initRealPOS() {
-  // instantiate and attempt autoconnect + loadKeys
+  console.log("[MAIN] initRealPOS started")
   try {
-    // dynamic import to avoid startup crash
-    // eslint-disable-next-line unicorn/prefer-module
     const sdk = await import('transbank-pos-sdk')
-    const { POSAutoservicio } = sdk
+    console.log("[MAIN] SDK loaded:", sdk)
+
+    // 👈 importante: acceder al default primero
+    const POSAutoservicio = sdk.default.POSAutoservicio
+
+    if (!POSAutoservicio) {
+      console.error("[MAIN] POSAutoservicio no encontrado en SDK")
+      return { ok: false, error: "POSAutoservicio missing" }
+    }
+
     posInstance = new POSAutoservicio()
     posInstance.setDebug(true)
+
     const port = await posInstance.autoconnect()
+    console.log("[MAIN] autoconnect result:", port)
+
     if (port === false) return { ok: false, error: 'No POS found' }
+
     await posInstance.loadKeys()
+    console.log("[MAIN] keys loaded")
+
     return { ok: true, msg: `Connected ${port.path}` }
+
   } catch (err) {
+    console.error("[MAIN] initRealPOS ERROR:", err)
     return { ok: false, error: String(err) }
   }
 }
+
 
 // Mock sale simulation used if SDK not available
 function mockSaleSimulation(amount, ticket, timeoutMs) {
@@ -54,8 +70,11 @@ function mockSaleSimulation(amount, ticket, timeoutMs) {
 
 // IPC handlers
 ipcMain.handle('pos:init', async () => {
+  console.log("[MAIN] pos:init received")
+  console.log("[MAIN] usingRealPos =", usingRealPos)
   if (usingRealPos) {
     const r = await initRealPOS()
+    console.log("[MAIN] initRealPOS result:", r)
     return r
   }
   // mock init: pretend OK
