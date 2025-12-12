@@ -20,15 +20,18 @@ try {
   // SDK not available — we will use mock logic below
   usingRealPos = false
 }
+function sleep(ms) {
+  return new Promise(resolve => setTimeout(resolve, ms));
+}
 
 async function initRealPOS() {
   win.webContents.send("log", {
-  tag: "[MAIN] initRealPOS started",
+    tag: "[MAIN] initRealPOS started",
   });
-  
+
   try {
     const sdk = await import('transbank-pos-sdk')
-    console.log("[MAIN] SDK loaded:",sdk);
+    console.log("[MAIN] SDK loaded:", sdk);
     win.webContents.send("log", {
       tag: "[MAIN] SDK loaded:",
       value: Object.keys(sdk)
@@ -38,7 +41,7 @@ async function initRealPOS() {
     const POSAutoservicio = sdk.default.POSAutoservicio
 
     if (!POSAutoservicio) {
-      
+
       win.webContents.send("log", {
         tag: "[MAIN] POSAutoservicio no encontrado en SDK",
       });
@@ -67,47 +70,43 @@ async function initRealPOS() {
         value: port
       });
     }*/
-    const isConnected = await posInstance.isConnected();
-    win.webContents.send("log", {
-      tag: "[MAIN] isConnected():",
-      value: isConnected
-    });
-
-    if (isConnected) {
-      const currentPort = await posInstance.getConnectedPort();
-      win.webContents.send("log", {
-        tag: "[MAIN] Already connected to:",
-        value: currentPort
-      });
-
-      try {
-        await posInstance.disconnect();
-        win.webContents.send("log", {
-          tag: "[MAIN] disconnected from existing port"
-        });
-      } catch (err) {
-        win.webContents.send("log", {
-          tag: "[MAIN] error disconnecting:",
-          value: err
-        });
-      }
+    try {
+      await posInstance.disconnect();
+    } catch (err) {
+      win.webContents.send("log", { tag: "[MAIN] disconnect error:", value: err });
     }
 
-    // ---------------------------------------------------------------
-    // 🟡 2) Ahora que estamos seguros de estar “limpios” → conectar
-    // ---------------------------------------------------------------
-    const port = await posInstance.connect("/dev/ttyACM0");
-    
-    win.webContents.send("log", {
-      tag: "[MAIN] trying to connect('/dev/ttyACM0') result:",
-      value: port
-    });
+    await sleep(250);
 
-    const isConnectedByDefultPort = await posInstance.isConnected();
-    win.webContents.send("log", {
-      tag: "[MAIN] isConnected():",
-      value: isConnectedByDefultPort
-    });
+    let port;
+    try {
+      port = await posInstance.connect("/dev/ttyACM0");
+      win.webContents.send("log", {
+        tag: "[MAIN] connected to /dev/ttyACM0",
+        value: port
+      });
+    } catch (err) {
+      win.webContents.send("log", {
+        tag: "[MAIN] connect error:",
+        value: err
+      });
+      return; // No sigas si no conecta
+    }
+
+    await sleep(150);
+
+    try {
+      const ok = await posInstance.isConnected();
+      win.webContents.send("log", {
+        tag: "[MAIN] isConnected():",
+        value: ok
+      });
+    } catch (err) {
+      win.webContents.send("log", {
+        tag: "[MAIN] isConnected error:",
+        value: err
+      });
+    }
 
     if (port === false) return { ok: false, error: 'No POS found' }
 
@@ -216,8 +215,8 @@ ipcMain.handle('pos:sale', async (_, { amount, ticket, timeoutMs }) => {
       const res = await posInstance.sale(amount, ticket)
       return { ok: true, data: res }
     } catch (err) {
-      return { ok: false, error: String(err) } 
-      
+      return { ok: false, error: String(err) }
+
     }
   }
   // mock path
