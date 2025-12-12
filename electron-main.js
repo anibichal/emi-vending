@@ -67,10 +67,39 @@ async function initRealPOS() {
         value: port
       });
     }*/
-    const port = await posInstance.connect('/dev/ttyACM0');
-    
+    const isConnected = await posInstance.isConnected();
     win.webContents.send("log", {
-      tag: "[MAIN] ACM0 result:",
+      tag: "[MAIN] isConnected():",
+      value: isConnected
+    });
+
+    if (isConnected) {
+      const currentPort = await posInstance.getConnectedPort();
+      win.webContents.send("log", {
+        tag: "[MAIN] Already connected to:",
+        value: currentPort
+      });
+
+      try {
+        await posInstance.disconnect();
+        win.webContents.send("log", {
+          tag: "[MAIN] disconnected from existing port"
+        });
+      } catch (err) {
+        win.webContents.send("log", {
+          tag: "[MAIN] error disconnecting:",
+          value: err
+        });
+      }
+    }
+
+    // ---------------------------------------------------------------
+    // 🟡 2) Ahora que estamos seguros de estar “limpios” → conectar
+    // ---------------------------------------------------------------
+    const port = await posInstance.connect("/dev/ttyACM0");
+
+    win.webContents.send("log", {
+      tag: "[MAIN] trying to connect('/dev/ttyACM0') result:",
       value: port
     });
 
