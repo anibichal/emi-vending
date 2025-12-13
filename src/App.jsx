@@ -13,10 +13,6 @@ import './index.css'
 export default function App() {
 
   useEffect(() => {
-
-  globalThis.electronAPI.onLog((msg) => {
-  console.log("[FROM MAIN]", msg.tag, msg.value);
-});
     preloadSounds(); // precarga todos los audios una sola vez
   }, []);
 

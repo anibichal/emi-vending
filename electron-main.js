@@ -25,26 +25,16 @@ function sleep(ms) {
 }
 
 async function initRealPOS() {
-  win.webContents.send("log", {
-    tag: "[MAIN] initRealPOS started",
-  });
 
   try {
     const sdk = await import('transbank-pos-sdk')
     console.log("[MAIN] SDK loaded:", sdk);
-    win.webContents.send("log", {
-      tag: "[MAIN] SDK loaded:",
-      value: Object.keys(sdk)
-    });
-
+    
     // 👈 importante: acceder al default primero
     const POSAutoservicio = sdk.default.POSAutoservicio
 
     if (!POSAutoservicio) {
 
-      win.webContents.send("log", {
-        tag: "[MAIN] POSAutoservicio no encontrado en SDK",
-      });
       return { ok: false, error: "POSAutoservicio missing" }
     }
 
@@ -54,7 +44,7 @@ async function initRealPOS() {
     try {
       await posInstance.disconnect();
     } catch (err) {
-      win.webContents.send("log", { tag: "[MAIN] disconnect error:", value: err });
+      
     }
 
     await sleep(1500);
@@ -62,87 +52,17 @@ async function initRealPOS() {
     let port;
     
     port = await posInstance.connect("/dev/ttyACM0");
-    win.webContents.send("log", {
-      tag: "[MAIN] connected to /dev/ttyACM0",
-      value: port
-    });
 
     await sleep(1000);
 
 
     if (port === false) return { ok: false, error: 'No POS found' }
 
-    /*await posInstance.loadKeys();
-    win.webContents.send("log", {
-      tag: "[MAIN] keys loaded"
-      
-    });*/
-
     return { ok: true, msg: `Connected ${port}` }
 
   } catch (err) {
-    win.webContents.send("log", {
-      tag: "[PRELOAD] initRealPOS ERROR:",
-      value: err
-    });
     return { ok: false, error: String(err) }
   }
-}
-
-async function scanManualPorts(POSAutoservicio) {
-  win.webContents.send("log", {
-    tag: "[MAIN] starting manual port scan",
-  });
-
-  const inst = new POSAutoservicio();
-  inst.setDebug(true);
-
-  let ports;
-  try {
-    ports = await inst.listPorts();
-    win.webContents.send("log", {
-      tag: "[MAIN] ports detected:",
-      value: ports
-    });
-  } catch (err) {
-    win.webContents.send("log", {
-      tag: "[MAIN] ERROR listing ports:",
-      value: err
-    });
-    return false;
-  }
-
-  if (!ports || ports.length === 0) {
-    win.webContents.send("log", {
-      tag: "[MAIN] no ports found",
-    });
-    return false;
-  }
-
-  for (const port of ports) {
-    try {
-      win.webContents.send("log", {
-        tag: "[MAIN] trying port:",
-        value: port
-      });
-
-      const result = await inst.connect(port);
-      win.webContents.send("log", {
-        tag: "[MAIN] CONNECT result:",
-        value: result
-      });
-
-      posInstance = inst;      // 👈 importante: dejar almacenado
-      return port;             // éxito → devolvemos puerto
-    } catch (err) {
-      win.webContents.send("log", {
-        tag: "[MAIN] failed port:",
-        value: { port, err }
-      });
-    }
-  }
-
-  return false;
 }
 
 // Mock sale simulation used if SDK not available

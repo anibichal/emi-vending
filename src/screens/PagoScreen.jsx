@@ -53,7 +53,6 @@ export default function PagoScreen() {
   const { litros } = useParams()
   const navigate = useNavigate()
   const [state, setState] = useState('ready') // ready | waiting | printing
-  const [initChecked, setInitChecked] = useState(false)
 
 
   const handlePay = async () => {
@@ -80,14 +79,14 @@ export default function PagoScreen() {
   }
 
   // if POS init hasn't completed yet, show a small spinner (avoid blank) ESTO LO CAMBIE ERA ASI if (!initChecked) AAB
-  if ((!initChecked)) {
+  /*if ((!initChecked)) {
     return (
       <ScreenWrapper>
         <h1 className="screen-title">Inicializando terminal...</h1>
         <LoadingSpinner />
       </ScreenWrapper>
     )
-  }
+  }*/
 
   return (
     <ScreenWrapper>
