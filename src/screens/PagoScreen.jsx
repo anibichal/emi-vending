@@ -4,7 +4,7 @@ import ScreenWrapper from '../components/ScreenWrapper.jsx'
 import Button from '../components/Button.jsx'
 import LoadingSpinner from '../components/LoadingSpinner.jsx'
 import { uiConfig } from '../config/uiConfig.js'
-import { initPOS, doSale } from '../services/posService.js'
+import { posAutomatico } from '../services/posAutomaticoService.js'
 import { ImprimirBoleta } from '../services/mockServices.js'
 import ButtonPay from '../components/ButtonPay.jsx'
 import { Home } from 'lucide-react'  // 👈 icono
@@ -56,29 +56,14 @@ export default function PagoScreen() {
   const [initChecked, setInitChecked] = useState(false)
 
 
-  useEffect(() => {
-    let mounted = true
-    ;(async () => {
-      const r = await initPOS()
-      if (!mounted) return
-      setInitChecked(true)
-      if (!r.ok) {
-        console.error('Init POS failed:', r)
-        navigate('/error')
-      }
-    })()
-    return () => { mounted = false }
-  }, [])
-
   const handlePay = async () => {
     setState('waiting')
     const price = uiConfig.prices[Number(litros)]
     const count = getTicketCountForToday()
     const ticket = `${formatDateForTicket()}${formatTimeForTicket()}${String(count).padStart(4,'0')}`
 
-    const saleResult = await doSale(price, ticket, uiConfig.saleTimeoutMs) // VOLVER A ESTADO ANTERIOR AAB
-    //const saleResult = await doSale(price, ticket, 3000) // volver a la normalidad este codigo
-    if (!saleResult.ok) {
+    const saleResult = await posAutomatico("sale", price, ticket, uiConfig.saleTimeoutMs)
+    if (!saleResult.status) {
       console.error('Sale failed:', saleResult)
       navigate('/error')
       return

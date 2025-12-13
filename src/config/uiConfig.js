@@ -26,7 +26,7 @@ export const uiConfig = {
     startFill: 'Comenzar'
   },
 
-  saleTimeoutMs: 3 * 10 * 1000 // 3 minutos
+  saleTimeoutMs: 3 * 60 * 1000 // 3 minutos
 }
 
 
