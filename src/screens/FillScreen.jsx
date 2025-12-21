@@ -6,6 +6,8 @@ import { uiConfig } from '../config/uiConfig'
 import { connectBidonSocket, disconnectBidonSocket } from '../services/bidonService'
 import ButtonStart from '../components/ButtonStart'
 import { playSound } from "../utils/AudioManager.js";
+import CornerLogo from "../components/CornerLogo.jsx";
+import InsertBottleAnimation from "../components/InsertBottleAnimation.jsx";
 
 
 export default function FillScreen() {
@@ -31,7 +33,7 @@ export default function FillScreen() {
       {status === 'waiting' ? (
         <>
           <h1 className="screen-title">{uiConfig.messages.fillInsert}</h1>
-          <LoadingSpinner />
+          <InsertBottleAnimation />
         </>
       ) : (
         <>
@@ -42,7 +44,9 @@ export default function FillScreen() {
         </>
       )}
 
-
+      <>
+       <CornerLogo />
+      </>
     </ScreenWrapper>
   )
 }

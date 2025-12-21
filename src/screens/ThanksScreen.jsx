@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom'
 import ScreenWrapper from '../components/ScreenWrapper.jsx'
 import { uiConfig } from '../config/uiConfig.js'
 import { playSound } from "../utils/AudioManager.js"; //
+import CornerLogo from "../components/CornerLogo.jsx";
 
 export default function ThanksScreen() {
   const navigate = useNavigate()
@@ -19,6 +20,9 @@ export default function ThanksScreen() {
   return (
     <ScreenWrapper>
       <h1 className="screen-title">{uiConfig.messages.thanks}</h1>
+      <>
+       <CornerLogo />
+      </>
     </ScreenWrapper>
   )
 }

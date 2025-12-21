@@ -8,6 +8,7 @@ import { posAutomatico } from '../services/posAutomaticoService.js'
 import { ImprimirBoleta } from '../services/mockServices.js'
 import ButtonPay from '../components/ButtonPay.jsx'
 import { Home } from 'lucide-react'  // 👈 icono
+import CornerLogo from "../components/CornerLogo.jsx";
 
 
 function getTicketCountForToday() {
@@ -121,6 +122,9 @@ export default function PagoScreen() {
       >
         <Home size={40} />
       </button>
+      <>
+        <CornerLogo />
+      </>
     </ScreenWrapper>
   )
 }

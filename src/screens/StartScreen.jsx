@@ -6,6 +6,7 @@ import { uiConfig } from '../config/uiConfig.js'
 import { connectStockLevelSocket, disconnectStockLevelSocket } from '../services/stockLevelService.js'
 import EmiLogo from "../components/EmiLogoAnimation.jsx";
 import { playSound } from "../utils/AudioManager.js"; //
+import CornerLogo from "../components/CornerLogo.jsx";
 
 export default function StartScreen() {
   const navigate = useNavigate()
@@ -13,8 +14,8 @@ export default function StartScreen() {
 
 
   const handleStart = () => {
-    navigate('/qty')
-    /*
+    //navigate('/qty')
+    
     setStatus('checking')
     playSound("tapSound");
     // Timeout de 10 segundos (10000 ms)
@@ -39,7 +40,7 @@ export default function StartScreen() {
         disconnectStockLevelSocket()
         setTimeout(() => setStatus('ready'), 5000)
       }
-    })*/
+    })
   }
 
   return (
@@ -65,6 +66,10 @@ export default function StartScreen() {
       {status === 'timeout' && (
           <h2 className="screen-title">{uiConfig.messages.timeoutStockService}</h2>
       )}
+        <>
+          <CornerLogo />
+        </>
+      
     </ScreenWrapper>
   )
 }

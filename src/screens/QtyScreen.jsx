@@ -6,6 +6,8 @@ import ButtonTwo from "../components/ButtonTwo.jsx";
 import ButtonThree from "../components/ButtonThree.jsx";
 import { uiConfig } from "../config/uiConfig.js";
 import { playSound } from "../utils/AudioManager.js";
+import CornerLogo from "../components/CornerLogo.jsx";
+import { Home } from 'lucide-react'  // 👈 icono
 
 export default function QtyScreen() {
   const navigate = useNavigate();
@@ -37,6 +39,16 @@ export default function QtyScreen() {
           <h1 className="qty-price">${uiConfig.prices[3]}</h1>
         </div>
       </div>
+      <button
+        className="home-button"
+        onClick={() => navigate('/')}
+        aria-label="Ir a inicio"
+      >
+        <Home size={40} />
+      </button>
+      <>
+          <CornerLogo />
+      </>
     </ScreenWrapper>
   );
 }

@@ -1,13 +1,14 @@
 import { useParams, useNavigate } from 'react-router-dom'
 import { useEffect, useState } from 'react'
 import ScreenWrapper from '../components/ScreenWrapper.jsx'
-import LoadingSpinner from '../components/LoadingSpinner.jsx'
 import { uiConfig } from '../config/uiConfig.js'
 import {
   connectServicioLlenado,
   disconnectServicioLlenado,
 } from '../services/servicioLlenadoService.js'
 import { playSound } from "../utils/AudioManager.js"; //
+import CornerLogo from "../components/CornerLogo.jsx";
+import FillingAnimation from "../components/FillingAnimation.jsx";
 
 export default function FillingScreen() {
   const { litros } = useParams()
@@ -65,7 +66,7 @@ export default function FillingScreen() {
       {status === 'filling' && (
         <>
           <h1 className="screen-title">{uiConfig.messages.filling}</h1>
-          <LoadingSpinner />
+          <FillingAnimation />
           <h2 style={{ marginTop: 20 }}>Peso actual: {peso?.toFixed(2) ?? '---'} kg</h2>
         </>
       )}
@@ -73,6 +74,9 @@ export default function FillingScreen() {
       {status === 'finished' && (
         <h1 className="screen-title">{uiConfig.messages.endFilling}</h1>
       )}
+      <>
+        <CornerLogo />
+      </>
     </ScreenWrapper>
   )
 }

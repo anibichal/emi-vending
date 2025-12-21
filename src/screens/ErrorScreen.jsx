@@ -2,6 +2,7 @@ import { useEffect } from 'react'
 import { useNavigate } from 'react-router-dom'
 import ScreenWrapper from '../components/ScreenWrapper.jsx'
 import { uiConfig } from '../config/uiConfig.js'
+import CornerLogo from "../components/CornerLogo.jsx";
 
 export default function ErrorScreen() {
   const navigate = useNavigate()
@@ -12,6 +13,9 @@ export default function ErrorScreen() {
   return (
     <ScreenWrapper>
       <h1 className="screen-title">{uiConfig.messages.error}</h1>
+      <>
+        <CornerLogo />
+      </>
     </ScreenWrapper>
   )
 }

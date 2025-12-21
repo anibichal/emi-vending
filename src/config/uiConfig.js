@@ -3,6 +3,7 @@ export const uiConfig = {
 
   messages: {
     start: 'Toque el logo para comenzar',
+    footer: 'Created by',
     checkingStock: 'Verificando nivel de stock...',
     lowStock: 'Nivel de stock bajo, no podemos proceder con la venta',
     timeoutStockService : 'Servicio de stock no disponible',
