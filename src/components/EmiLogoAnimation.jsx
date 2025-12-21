@@ -1,7 +1,7 @@
 // EmiLogoAnimation.jsx
 import React, { useEffect, useRef } from "react";
 import Lottie from "lottie-react";
-import EmiLogo from "../assets/EmiLogoAnimation.json"; // ajusta la ruta si es necesario
+import EmiLogo from "../assets/WelcomeAnimation.json"; // ajusta la ruta si es necesario
 
 export default function EmiLogoAnimation({ loop = true, style = {}, onClick }) {
   const lottieRef = useRef(null);
