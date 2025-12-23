@@ -67,7 +67,6 @@ export default function FillingScreen() {
         <>
           <h1 className="screen-title">{uiConfig.messages.filling}</h1>
           <FillingAnimation />
-          <h2 style={{ marginTop: 20 }}>Peso actual: {peso?.toFixed(2) ?? '---'} kg</h2>
         </>
       )}
 
