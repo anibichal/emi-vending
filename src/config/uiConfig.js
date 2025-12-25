@@ -10,7 +10,7 @@ export const uiConfig = {
     qty: '¿Cuántos litros desea cargar?',
     paySelection: litros => `Usted ha seleccionado ${litros} litro(s)`,
     paying: 'Siga las instrucciones en el pinpad',
-    printing: 'Pago procesado, imprimiendo boleta...',
+    printing: 'Pago procesado, generando comprobante',
     fillInsert: 'Introduzca el bidón en la ranura',
     fillReady: 'Presione botón iniciar para comenzar el llenado',
     preparingFilling: 'Comenzando Llenado',

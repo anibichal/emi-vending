@@ -14,7 +14,7 @@ import CornerLogo from "../components/CornerLogo.jsx";
 function getTicketCountForToday() {
   try {
     const raw = localStorage.getItem('ticketCounter')
-    const today = new Date().toISOString().slice(0,10)
+    const today = new Date().toISOString().slice(0, 10)
     if (!raw) {
       const newObj = { date: today, count: 1 }
       localStorage.setItem('ticketCounter', JSON.stringify(newObj))
@@ -31,22 +31,22 @@ function getTicketCountForToday() {
       return obj.count
     }
   } catch (err) {
-    const fallback = { date: new Date().toISOString().slice(0,10), count: 1 }
+    const fallback = { date: new Date().toISOString().slice(0, 10), count: 1 }
     localStorage.setItem('ticketCounter', JSON.stringify(fallback))
     return fallback.count
   }
 }
 
 function formatDateForTicket(d = new Date()) {
-  const dd = String(d.getDate()).padStart(2,'0')
-  const mm = String(d.getMonth()+1).padStart(2,'0')
+  const dd = String(d.getDate()).padStart(2, '0')
+  const mm = String(d.getMonth() + 1).padStart(2, '0')
   const yyyy = d.getFullYear()
   return `${dd}${mm}${yyyy}`
 }
 function formatTimeForTicket(d = new Date()) {
-  const hh = String(d.getHours()).padStart(2,'0')
-  const mi = String(d.getMinutes()).padStart(2,'0')
-  const ss = String(d.getSeconds()).padStart(2,'0')
+  const hh = String(d.getHours()).padStart(2, '0')
+  const mi = String(d.getMinutes()).padStart(2, '0')
+  const ss = String(d.getSeconds()).padStart(2, '0')
   return `${hh}${mi}${ss}`
 }
 
@@ -60,7 +60,7 @@ export default function PagoScreen() {
     setState('waiting')
     const price = uiConfig.prices[Number(litros)]
     const count = getTicketCountForToday()
-    const ticket = `${formatDateForTicket()}${formatTimeForTicket()}${String(count).padStart(4,'0')}`
+    const ticket = `${formatDateForTicket()}${formatTimeForTicket()}${String(count).padStart(4, '0')}`
 
     const saleResult = await posAutomatico("sale", price, ticket, uiConfig.saleTimeoutMs)
     if (!saleResult.status) {
@@ -76,18 +76,8 @@ export default function PagoScreen() {
     } else {
       navigate('/error')
     }
-   navigate(`/fill/${litros}`)
+    navigate(`/fill/${litros}`)
   }
-
-  // if POS init hasn't completed yet, show a small spinner (avoid blank) ESTO LO CAMBIE ERA ASI if (!initChecked) AAB
-  /*if ((!initChecked)) {
-    return (
-      <ScreenWrapper>
-        <h1 className="screen-title">Inicializando terminal...</h1>
-        <LoadingSpinner />
-      </ScreenWrapper>
-    )
-  }*/
 
   return (
     <ScreenWrapper>
@@ -98,6 +88,14 @@ export default function PagoScreen() {
             <ButtonPay onClick={handlePay} />
           </div>
           <h1 className="screen-title">Total: ${uiConfig.prices[Number(litros)]}</h1>
+          {/* 👇 Botón flotante de Home */}
+          <button
+            className="home-button"
+            onClick={() => navigate('/')}
+            aria-label="Ir a inicio"
+          >
+            <Home size={40} />
+          </button>
         </>
       )}
 
@@ -114,17 +112,10 @@ export default function PagoScreen() {
           <LoadingSpinner />
         </>
       )}
-            {/* 👇 Botón flotante de Home */}
-      <button
-        className="home-button"
-        onClick={() => navigate('/')}
-        aria-label="Ir a inicio"
-      >
-        <Home size={40} />
-      </button>
-      <>
-        <CornerLogo />
-      </>
+
+
+      <CornerLogo />
+
     </ScreenWrapper>
   )
 }
